@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-dark text-light">
+      <h1><%= title %></h1>
+      <a href="/addDino" class="btn btn-light">Add Dino</a>
+    </nav>
+    <div class="container bg-light">
+      <div id="map"></div>
+      <div id="infos"></div>
+    </div>
+    <!-- get smin added sinosaurs to the front -->
+    <div id="holdser" style="visibility: hidden"><%= newdins %></div>
+    <!-- This contains the key and is required for google maps -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key={your api key}}&callback=initMap"
+      type="text/javascript"
+    ></script>
+    <!-- Jquery cdn link -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <!-- script to handle map funcitons, I put it in seperate file so it wouldn't get so cluttered -->
+    <script src="javascripts/MapHandler.js"></script>
+    <!-- Script passes the data from mongodb from the back end to the front and to the map methods -->
+    <script type="text/javascript">
+      //get data and pass it to js handler
+            var datas = {
+              lat: [],
+              lng: [],
+              plDB:[],
+              found:{
+                loc:[],
+                cou:[]
+              },
+              type:[],
+              species:[],
+              info:[],
+              img:[]
+            };
+            <% for(var i =0; i < data.length; i++){ %>
+              var coordLng ="-" + <%= data[i].coordinates.lng %>;
+              var coordLat = <%= data[i].coordinates.lat%>;
+              var lng = parseFloat(coordLng);
+              var lat = parseFloat(coordLat);
+              datas.lat.push(lat);
+              datas.lng.push(lng);
+              datas.plDB.push(<%= data[i].PaleoDBNum %>);
+              datas.found.loc.push("<%= data[i].foundLocation.location %>");
+              datas.found.cou.push("<%= data[i].foundLocation.county %>");
+              datas.type.push("<%= data[i].type %>");
+              datas.species.push("<%= data[i].species %>");
+              datas.info.push("<%= data[i].information %>");
+              datas.img.push("<%= data[i].images %>");
+            <%} %>
+
+            //load admin added dinos
+            var i = document.getElementById("holdser");
+            var x = i.innerHTML;
+            var jso = JSON.parse(x);
+            for( var x = 0; x < jso.length; x++)
+            {
+              datas.lat.push(parseFloat(jso[x].coordinates.lat));
+              datas.lng.push(parseFloat(jso[x].coordinates.lng));
+              datas.plDB.push(parseInt(jso[x].PaleoDB));
+              datas.found.loc.push(jso[x].foundLocation.location);
+              datas.found.cou.push(jso[x].foundLocation.county);
+              datas.type.push(jso[x].type);
+              datas.species.push(jso[x].species);
+              datas.info.push(jso[x].information);
+              datas.img.push(jso[x].images);
+            }
+
+            loadlatlng(datas); //loads the map
+    </script>
+  </body>
+</html>

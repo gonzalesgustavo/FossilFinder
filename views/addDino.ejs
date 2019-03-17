@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add a Dino</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/stylesheets/form.style.css" />
+  </head>
+  <body>
+    <% include _nav.ejs %>
+    <div class="container">
+      <div class="note">
+        <h1 id="title">
+          In order to add a Dinosaur you need to be an admin and all fields are
+          required. If you would like to sign up as an admin click the link
+          below.
+        </h1>
+        <br />
+        <a href="/adminReg" class="btn btn-dark">Become An Admin</a>
+      </div>
+
+      <form action="/addDino/addAD" method="post">
+        <div class="form-holder">
+          <div class="co-two mg-space-tb">
+            <div>
+              <h2 id="title">admin Username: (required to add a dinosaur)</h2>
+              <input type="text" name="admusr" />
+            </div>
+            <div>
+              <h2 id="title">admin Password: (required to add a dinosaur)</h2>
+              <input type="password" name="admpwd" />
+            </div>
+          </div>
+          <div class="co-two mg-space-tb">
+            <div>
+              <h3>info</h3>
+              <input type="text" name="info" required="true" />
+            </div>
+            <div>
+              <h3>image(urlOnly)</h3>
+              <input type="text" name="img" required="true" />
+            </div>
+          </div>
+          <div class="co-four mg-space-tb">
+            <div>
+              <h3>PaleoDB</h3>
+              <input type="number" name="paleDB" required="true" />
+            </div>
+            <div>
+              <h3>lat</h3>
+              <input type="text" name="lat" required="true" />
+            </div>
+            <div>
+              <h3>lat</h3>
+              <input type="text" name="lat" required="true" />
+            </div>
+            <div>
+              <h3>lng</h3>
+              <input type="text" name="lng" required="true" />
+            </div>
+            <div>
+              <h3>Found Locations</h3>
+              <input type="text" name="loc" required="true" />
+            </div>
+            <div>
+              <h3>county</h3>
+              <input type="text" name="cou" required="true" />
+            </div>
+            <div>
+              <h3>type</h3>
+              <input type="text" name="type" required="true" />
+            </div>
+            <div>
+              <h3>species</h3>
+              <input type="text" name="speci" required="true" />
+            </div>
+          </div>
+          <input class="sub-btn" type="submit" name="submit" />
+        </div>
+
+        <!-- <div class="form-group">
+          
+          
+          
+          
+          
+        </div>
+
+        <div class="form-group">
+         
+          
+          
+          
+        </div> -->
+      </form>
+    </div>
+  </body>
+</html>
